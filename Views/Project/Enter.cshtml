@@ -1,0 +1,33 @@
+﻿@model ScrumApp__Juro_.Models.Entities.Project
+
+@{
+	ViewData["Title"] = "Project Details";
+}
+
+<h1>Project - @Model.ProjectID</h1>
+
+<h3>Title </h3> 
+<p>@Model.Title</p>
+
+<h3>Description</h3>
+<p>@Model.Description</p>
+
+<h3>Modules</h3>
+@if(Model.Modules != null && Model.Modules.Any())
+{
+	foreach (var item in Model.Modules)
+	{
+		<p>-------------------------------</p>
+		<p>Module ID : @item.ModuleID</p>
+		<p>Title : @item.Title</p>
+		<p>Description : @item.Description</p>
+		<p>Status : @item.Status</p>
+		<p>Created At : @item.CreatedAt</p>
+	}
+}
+else
+{
+    <p>No modules created</p>
+}
+
+<a asp-action="CreateModule" asp-route-id="@Model.ProjectID" class="btn btn-success">Create Module</a>

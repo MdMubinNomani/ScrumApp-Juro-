@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ScrumApp__Juro_.Models.Entities.Project>
+
+@{
+    ViewData["Title"] = "Projects";
+}
+
+<h1>Projects</h1>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    @Html.DisplayName("Created At")
+                </th>
+                <th>
+					@Html.DisplayName("Actions")
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                    </td>
+                    <td>
+                        <a class="btn btn-secondary" asp-action="Enter" asp-route-id="@item.ProjectID">Enter</a> |
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProjectID"> End </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No projects created.</p>
+}
+<p>
+    <a class="btn btn-success" asp-action="Create">Add New Project</a>
+</p>

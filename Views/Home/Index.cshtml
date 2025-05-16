@@ -2,12 +2,18 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-left">
-    <h1 class="display-4">Welcome to <strong>Juro</strong></h1>
-    <h3 class="display-6">Agile collaboration made simple.</h3>
-    <p style="padding-top:50px">Juro is your all-in-one workspace for managing Scrum teams, 
-        tracking sprints, and delivering better software — faster. Whether you're planning your next sprint, 
-        running daily stand-ups, or reviewing backlogs, Juro keeps your team aligned and your projects on track.s</p>
+<div class="container mt-5">
+    <div class="text-center p-5 bg-light rounded shadow-sm">
+        <h1 class="display-4 fw-bold">Welcome to <span class="text-primary">Juro</span></h1>
+        <h4 class="text-secondary mb-4">Agile collaboration made simple.</h4>
 
-    <a asp-controller="Project" asp-action="Projects" class="btn btn-primary">Get Started</a>
+        <p class="lead text-muted">
+            Juro is your all-in-one workspace for managing Scrum teams, tracking sprints, and delivering better software — <strong>faster</strong>.
+            Whether you're planning your next sprint, running daily stand-ups, or reviewing backlogs, Juro keeps your team aligned and your projects on track.
+        </p>
+
+        <a asp-controller="Project" asp-action="Projects" class="btn btn-primary btn-lg mt-4">
+            Get Started
+        </a>
+    </div>
 </div>

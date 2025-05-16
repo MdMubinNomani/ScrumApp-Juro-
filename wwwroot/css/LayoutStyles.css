@@ -1,0 +1,23 @@
+﻿body {
+    background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+}
+
+.hero-section {
+    background-color: #ffffffee;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero-title span {
+    color: #00796b;
+}
+
+.hero-button {
+    background-color: #00796b;
+    border-color: #00796b;
+}
+
+    .hero-button:hover {
+        background-color: #004d40;
+        border-color: #004d40;
+    }

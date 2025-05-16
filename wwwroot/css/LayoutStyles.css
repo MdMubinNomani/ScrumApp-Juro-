@@ -73,3 +73,38 @@ footer.footer {
 main {
     flex-grow: 1;
 }
+
+.text-teal {
+    color: #00796b;
+}
+
+.btn-teal {
+    background-color: #00796b;
+    color: white;
+    border: none;
+}
+
+    .btn-teal:hover {
+        background-color: #005f56;
+    }
+
+.btn-outline-teal {
+    color: #00796b;
+    border-color: #00796b;
+}
+
+    .btn-outline-teal:hover {
+        background-color: #00796b;
+        color: white;
+    }
+
+.btn-sm i {
+    font-size: 1rem;
+    vertical-align: middle;
+}
+
+.table-teal {
+    background-color: #1e4946;
+    color: white;
+    border: none;
+}

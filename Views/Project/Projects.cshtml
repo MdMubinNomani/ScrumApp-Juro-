@@ -17,7 +17,7 @@
                 <thead class="table-teal text-center">
                     <tr>
                         <th>@Html.DisplayNameFor(model => model.Title)</th>
-                        <th>@Html.DisplayName("Created At")</th>
+                        @* <th>@Html.DisplayName("Created At")</th> *@
                         <th>@Html.DisplayName("Actions")</th>
                     </tr>
                 </thead>
@@ -26,15 +26,20 @@
                     {
                         <tr>
                             <td class="fw-semibold">@Html.DisplayFor(modelItem => item.Title)</td>
-                            <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                            @* <td>@item.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td> *@
+
                             <td class="text-center">
                                 <div class="btn-group" role="group">
                                     <a class="btn btn-sm btn-outline-teal" asp-action="Enter" asp-route-id="@item.ProjectID" title="Enter Project">
                                         <i class="bi bi-box-arrow-in-right"></i>
                                     </a>
-                                    <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.ProjectID" title="End Project">
-                                        <i class="bi bi-x-circle"></i>
-                                    </a>
+
+                                    <form asp-action="Delete" asp-route-id="@item.ProjectID" method="post" class="d-inline delete-form">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="End Project">
+                                            <i class="bi bi-x-circle"></i>
+                                        </button>
+                                    </form>
+
                                 </div>
                             </td>
                         </tr>

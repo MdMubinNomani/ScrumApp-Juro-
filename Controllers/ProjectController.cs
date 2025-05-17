@@ -51,7 +51,6 @@ namespace ScrumApp__Juro_.Controllers
             return View(project);
         }
 
-
         public IActionResult CreateModule(int Id)
         {
             Module module = new Module();
@@ -82,6 +81,24 @@ namespace ScrumApp__Juro_.Controllers
 
             return RedirectToAction(nameof(Enter), new { Id = module.ProjectID });
         }
+
+        // Post : Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var project = await _context.Projects.FindAsync(id);
+            if (project == null)
+            {
+                return NotFound();
+            }
+
+            _context.Projects.Remove(project);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Projects));
+        }
+
 
     }
 }

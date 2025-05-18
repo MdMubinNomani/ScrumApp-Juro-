@@ -6,13 +6,15 @@
 
 <h1>Project - @Model.ProjectID</h1>
 
-<h3>Title </h3> 
+<h2>Title </h2> 
 <p>@Model.Title</p>
 
-<h3>Description</h3>
+<h2>Description</h2>
 <p>@Model.Description</p>
 
-<h3>Modules</h3>
+<h2>Progress</h2>
+
+<h4>Not started / Backlog</h4>
 @if(Model.Modules != null && Model.Modules.Any())
 {
 	foreach (var item in Model.Modules)
@@ -23,11 +25,20 @@
 		<p>Description : @item.Description</p>
 		<p>Status : @item.Status</p>
 		<p>Created At : @item.CreatedAt</p>
+
+		<a>Edit</a>
+		<a asp-controller="Submodule" asp-action="Index" asp-route-id="@item.ModuleID">View Submodule</a>
+		<a asp-controller="Submodule" asp-action="Create" asp-route-id="@item.ModuleID">Add Submodule</a>
 	}
 }
 else
 {
     <p>No modules created</p>
 }
-
 <a asp-action="CreateModule" asp-route-id="@Model.ProjectID" class="btn btn-success">Create Module</a>
+
+<h4>In progress</h4>
+<p>No modules created</p>
+
+<h4>Completed</h4>
+<p>No modules created</p>

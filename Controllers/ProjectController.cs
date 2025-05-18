@@ -16,7 +16,7 @@ namespace ScrumApp__Juro_.Controllers
         }
 
         // GET: Project
-        public IActionResult Projects()
+        public IActionResult Index()
         {
             var projects = _context.Projects.ToList();
             return View(projects);
@@ -36,7 +36,7 @@ namespace ScrumApp__Juro_.Controllers
             project.Modules = new List<Module>();
             _context.Add(project);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Projects));
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Project/Enter/?id=
@@ -96,7 +96,7 @@ namespace ScrumApp__Juro_.Controllers
             _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Projects));
+            return RedirectToAction(nameof(Index));
         }
 
 

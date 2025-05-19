@@ -16,6 +16,7 @@ namespace ScrumApp__Juro_.Models.Entities
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         // Foreign Key
+        public int ProjectID { get; set; }
         public int ModuleID { get; set; }
         public virtual Module Module { get; set; }
 

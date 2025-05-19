@@ -17,7 +17,7 @@ namespace ScrumApp__Juro_.Controllers
         public IActionResult Index(int Id)
         {
             var submodules = _context.SubModules
-                .Where(s => s.ModuleID == Id)
+                .Where(s => s.ModuleID == Id) 
                 .ToList();
             return View(submodules);
         }

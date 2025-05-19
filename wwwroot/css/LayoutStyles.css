@@ -108,3 +108,42 @@ main {
     color: white;
     border: none;
 }
+
+.Column {
+    margin:10px;
+}
+
+/*.ColumnLines {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+}*/
+
+.TableCard {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: 0;
+}
+
+.TableName {
+    margin-bottom:15px;
+    margin-top:15px;
+}
+
+.NotFoundItemCard {
+    background-color: lightcyan;
+    border-radius: .5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding:.5rem;
+}
+.NotFoundItemCard p {
+    margin-bottom: 0;
+}
+
+.ItemCard {
+    background-color: #6f6f6f;
+    color: white;
+    border-radius: .5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: .5rem;
+}

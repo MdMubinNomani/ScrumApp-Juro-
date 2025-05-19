@@ -1,44 +1,233 @@
-﻿@model ScrumApp__Juro_.Models.Entities.Project
+﻿@model ScrumApp__Juro_.ViewModels.ProjectsViewModel
 
 @{
-	ViewData["Title"] = "Project Details";
+    ViewData["Title"] = "Project Details";
 }
 
-<h1>Project - @Model.ProjectID</h1>
+<h1>Project - @Model.Project.ProjectID</h1>
 
 <h2>Title </h2> 
-<p>@Model.Title</p>
+<p>@Model.Project.Title</p>
 
 <h2>Description</h2>
-<p>@Model.Description</p>
+<p>@Model.Project.Description</p>
 
-<h2>Progress</h2>
+<h2>Status</h2>
 
-<h4>Not started / Backlog</h4>
-@if(Model.Modules != null && Model.Modules.Any())
-{
-	foreach (var item in Model.Modules)
-	{
-		<p>-------------------------------</p>
-		<p>Module ID : @item.ModuleID</p>
-		<p>Title : @item.Title</p>
-		<p>Description : @item.Description</p>
-		<p>Status : @item.Status</p>
-		<p>Created At : @item.CreatedAt</p>
+<h4>Not tarted / Backlog</h4> @*This is the Not Started Section of the View*@
+<a asp-action="CreateModule" asp-route-id="@Model.Project.ProjectID" class="btn btn-success">Create Module</a>
 
-		<a>Edit</a>
-		<a asp-controller="Submodule" asp-action="Index" asp-route-id="@item.ModuleID">View Submodule</a>
-		<a asp-controller="Submodule" asp-action="Create" asp-route-id="@item.ModuleID">Add Submodule</a>
-	}
-}
-else
-{
-    <p>No modules created</p>
-}
-<a asp-action="CreateModule" asp-route-id="@Model.ProjectID" class="btn btn-success">Create Module</a>
+<div class="TableCard" style="display: flex; width: 100%;">
 
-<h4>In progress</h4>
-<p>No modules created</p>
+    <div class="Column" style="flex: 1; text-align: center;">
+        <h5 class="TableName">Modules</h5>
+        
+        @if (Model.Modules.FindAll(m => m.Status == "Not Started").Count != 0)
+        {
+            foreach (var module in Model.Modules.FindAll(m => m.Status == "Not Started"))
+            {   
+                <div class="ItemCard ItemCard-NotStarted">
+                    <p>Project - @module.ProjectID</p>
+                    <p>Module - @module.ModuleID</p>
+                    <p>Title - @module.Title</p>
+                    <p>Status - @module.Status</p>
 
-<h4>Completed</h4>
-<p>No modules created</p>
+                    <form asp-controller="Module" asp-action="MoveStatusUp" asp-route-id="@module.ModuleID" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit">Move up</button>
+                    </form>
+
+                    <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit">Remove</button>
+                    </form>
+
+                    <a>View</a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-info shadow-sm">
+                <p>No Modules created</p>
+            </div>
+        }
+    </div>
+
+    <div class="ColumnLines Column" style="flex: 1; text-align: center;">
+        <h5 class ="TableName">Submodules</h5>
+
+        @if (false)
+        {
+            <div class="ItemCard">
+
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info shadow-sm">
+                <p>No Modules created</p>
+            </div>
+        }
+    </div>
+    <div class="Column" style="flex: 1; text-align: center;">
+        <h5 class="TableName" >Tasks</h5>
+
+        @if (false)
+        {
+            <div class="ItemCard">
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info shadow-sm">
+                <p>No Modules created</p>
+            </div>
+        }
+    </div>
+</div>
+
+
+<h4>In progress</h4>@*This is the In progress Section of the View*@
+<div class="TableCard" style="display: flex; width: 100%;">
+    <div class="Column" style="flex: 1; text-align: center;">
+        <h5 class="TableName">Modules</h5>
+
+        @if (Model.Modules.FindAll(m => m.Status == "In Progress").Count != 0)
+        {
+            foreach (var module in Model.Modules.FindAll(m => m.Status == "In Progress"))
+            {
+                <div class="ItemCard ItemCard-InProgress">
+                    <p>Project - @module.ProjectID</p>
+                    <p>Module - @module.ModuleID</p>
+                    <p>Title - @module.Title</p>
+                    <p>Status - @module.Status</p>
+
+                    <form asp-controller="Module" asp-action="MoveStatusUp" asp-route-id="@module.ModuleID" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit">Move up</button>
+                    </form>
+
+                    <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit">Move down</button>
+                    </form>
+
+                    <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit">Remove</button>
+                    </form>
+
+                    <a>View</a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-info shadow-sm">
+                <p>No Modules created</p>
+            </div>
+        }
+    </div>
+    <div class="ColumnLines Column" style="flex: 1; text-align: center;">
+        <h5 class="TableName">Submodules</h5>
+
+        @if (false)
+        {
+            <div class="ItemCard">
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info shadow-sm">
+                <p>No Modules created</p>
+            </div>
+        }
+    </div>
+    <div class="Column" style="flex: 1; text-align: center;">
+        <h5 class="TableName">Tasks</h5>
+
+        @if (false)
+        {
+            <div class="ItemCard">
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info shadow-sm">
+                <p>No Modules created</p>
+            </div>
+        }
+    </div>
+</div>
+
+
+<h4>Completed</h4> @*This is the Completed Section of the View*@
+
+<div class="TableCard" style="display: flex; width: 100%;">
+    <div class="Column" style="flex: 1; text-align: center;">
+        <h5 class="TableName">Modules</h5>
+
+        @if (Model.Modules.FindAll(m => m.Status == "Completed").Count != 0)
+        {
+            foreach (var module in Model.Modules.FindAll(m => m.Status == "Completed"))
+            {
+                <div class="ItemCard ItemCard-Completed">
+                    <p>Project - @module.ProjectID</p>
+                    <p>Module - @module.ModuleID</p>
+                    <p>Title - @module.Title</p>
+                    <p>Status - @module.Status</p>
+
+                    <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit">Move down</button>
+                    </form>
+
+                    <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form" style="display:inline;">
+                        @Html.AntiForgeryToken()
+                        <button type="submit">Remove</button>
+                    </form>
+
+                    <a>View</a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="alert alert-info shadow-sm">
+                <p>No Modules created</p>
+            </div>
+        }
+    </div>
+    <div class="ColumnLines Column" style="flex: 1; text-align: center;">
+        <h5 class="TableName">Submodules</h5>
+
+        @if (false)
+        {
+            <div class="ItemCard">
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info shadow-sm">
+                <p>No Modules created</p>
+            </div>
+        }
+    </div>
+    <div class="Column" style="flex: 1; text-align: center;">
+        <h5 class="TableName">Tasks</h5>
+
+        @if (false)
+        {
+            <div class="ItemCard">
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info shadow-sm">
+                <p>No Modules created</p>
+            </div>
+        }
+    </div>
+</div>
+

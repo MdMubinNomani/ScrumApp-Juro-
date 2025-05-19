@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using ScrumApp__Juro_.Data;
 using ScrumApp__Juro_.Models.Entities;
+using ScrumApp__Juro_.ViewModels;
 
 namespace ScrumApp__Juro_.Controllers
 {
@@ -42,13 +44,25 @@ namespace ScrumApp__Juro_.Controllers
         // GET: Project/Enter/?id=
         public IActionResult Enter(int Id)
         {
-            var project = _context.Projects
-                .Include(p => p.Modules)
-                .FirstOrDefault(p => p.ProjectID == Id);
+            var PVM = FetchAllByProjectID(Id);
+            return View(PVM);
+        }
 
-            if (project == null) return NotFound();
+        public ProjectsViewModel FetchAllByProjectID(int Id)
+        {
+            var PVM = new ProjectsViewModel();
+            PVM.Project = _context.Projects.FirstOrDefault(p => p.ProjectID == Id);
+            PVM.Modules = _context.Modules.Include(m => m.SubModules)
+                .ThenInclude(s => s.Tasks)
+                .Where(m => m.ProjectID == Id)
+                .ToList();
+            PVM.SubModules = _context.SubModules.Include(s => s.Tasks)
+                .Where(m => m.ProjectID == Id)
+                .ToList();
+            PVM.Tasks = _context.Tasks.Where(m => m.ProjectID == Id)
+                .ToList();
 
-            return View(project);
+            return PVM;
         }
 
         public IActionResult CreateModule(int Id)
@@ -96,7 +110,7 @@ namespace ScrumApp__Juro_.Controllers
             _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index)); 
         }
 
 

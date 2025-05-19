@@ -4,230 +4,273 @@
     ViewData["Title"] = "Project Details";
 }
 
-<h1>Project - @Model.Project.ProjectID</h1>
 
-<h2>Title </h2> 
-<p>@Model.Project.Title</p>
+<head>
+    <link rel="stylesheet" href="~/css/LayoutStyles.css" />
+    <link rel="stylesheet" href="~/css/EnterStyles.css" asp-append-version="true" />
+</head>
 
-<h2>Description</h2>
-<p>@Model.Project.Description</p>
 
-<h2>Status</h2>
+<div class="container mt-5">
+    <h1 class="mb-4">Project - @Model.Project.ProjectID</h1>
 
-<h4>Not tarted / Backlog</h4> @*This is the Not Started Section of the View*@
-<a asp-action="CreateModule" asp-route-id="@Model.Project.ProjectID" class="btn btn-success">Create Module</a>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title">Title</h2>
+            <p class="card-text">@Model.Project.Title</p>
 
-<div class="TableCard" style="display: flex; width: 100%;">
+            <h2 class="card-title">Description</h2>
+            <p class="card-text">@Model.Project.Description</p>
+        </div>
+    </div>
 
-    <div class="Column" style="flex: 1; text-align: center;">
-        <h5 class="TableName">Modules</h5>
-        
-        @if (Model.Modules.FindAll(m => m.Status == "Not Started").Count != 0)
-        {
-            foreach (var module in Model.Modules.FindAll(m => m.Status == "Not Started"))
-            {   
-                <div class="ItemCard ItemCard-NotStarted">
-                    <p>Project - @module.ProjectID</p>
-                    <p>Module - @module.ModuleID</p>
-                    <p>Title - @module.Title</p>
-                    <p>Status - @module.Status</p>
+    <h2 class="mb-3">Status</h2>
 
-                    <form asp-controller="Module" asp-action="MoveStatusUp" asp-route-id="@module.ModuleID" method="post" style="display:inline;">
-                        @Html.AntiForgeryToken()
-                        <button type="submit">Move up</button>
-                    </form>
+    <h4 class="mb-2">Not Started / Backlog</h4>
+    <p>
+        <a asp-action="CreateModule" asp-route-id="@Model.Project.ProjectID" class="btn btn-success">Create Module</a>
+    </p>
 
-                    <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form" style="display:inline;">
-                        @Html.AntiForgeryToken()
-                        <button type="submit">Remove</button>
-                    </form>
-
-                    <a>View</a>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Modules</h5>
+                    @if (Model.Modules.FindAll(m => m.Status == "Not Started").Count != 0)
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var module in Model.Modules.FindAll(m => m.Status == "Not Started"))
+                            {
+                                <li class="list-group-item ItemCard ItemCard-NotStarted">
+                                    <p class="mb-1"><strong>Project:</strong> @module.ProjectID</p>
+                                    <p class="mb-1"><strong>Module:</strong> @module.ModuleID</p>
+                                    <p class="mb-1"><strong>Title:</strong> @module.Title</p>
+                                    <p class="mb-1"><strong>Status:</strong> @module.Status</p>
+                                    <div class="mt-2">
+                                        <form asp-controller="Module" asp-action="MoveStatusUp" asp-route-id="@module.ModuleID" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Move Up</button>
+                                        </form>
+                                        <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                        </form>
+                                        <a href="#" class="btn btn-sm btn-info ms-1">View</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info shadow-sm mt-3">
+                            No Modules created
+                        </div>
+                    }
                 </div>
-            }
-        }
-        else
-        {
-            <div class="alert alert-info shadow-sm">
-                <p>No Modules created</p>
             </div>
-        }
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Submodules</h5>
+                    @if (false)
+                    {
+                        <div class="ItemCard">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info shadow-sm mt-3">
+                            No Submodules created
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Tasks</h5>
+                    @if (false)
+                    {
+                        <div class="ItemCard">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info shadow-sm mt-3">
+                            No Tasks created
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="ColumnLines Column" style="flex: 1; text-align: center;">
-        <h5 class ="TableName">Submodules</h5>
-
-        @if (false)
-        {
-            <div class="ItemCard">
-
+    <h4 class="mb-2">In progress</h4>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Modules</h5>
+                    @if (Model.Modules.FindAll(m => m.Status == "In Progress").Count != 0)
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var module in Model.Modules.FindAll(m => m.Status == "In Progress"))
+                            {
+                                <li class="list-group-item ItemCard ItemCard-InProgress">
+                                    <p class="mb-1"><strong>Project:</strong> @module.ProjectID</p>
+                                    <p class="mb-1"><strong>Module:</strong> @module.ModuleID</p>
+                                    <p class="mb-1"><strong>Title:</strong> @module.Title</p>
+                                    <p class="mb-1"><strong>Status:</strong> @module.Status</p>
+                                    <div class="mt-2">
+                                        <form asp-controller="Module" asp-action="MoveStatusUp" asp-route-id="@module.ModuleID" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Move Up</button>
+                                        </form>
+                                        <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" class="d-inline ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Move Down</button>
+                                        </form>
+                                        <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                        </form>
+                                        <a href="#" class="btn btn-sm btn-info ms-1">View</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info shadow-sm mt-3">
+                            No Modules created
+                        </div>
+                    }
+                </div>
             </div>
-        }
-        else
-        {
-            <div class="alert alert-info shadow-sm">
-                <p>No Modules created</p>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Submodules</h5>
+                    @if (false)
+                    {
+                        <div class="ItemCard">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info shadow-sm mt-3">
+                            No Submodules created
+                        </div>
+                    }
+                </div>
             </div>
-        }
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Tasks</h5>
+                    @if (false)
+                    {
+                        <div class="ItemCard">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info shadow-sm mt-3">
+                            No Tasks created
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="Column" style="flex: 1; text-align: center;">
-        <h5 class="TableName" >Tasks</h5>
 
-        @if (false)
-        {
-            <div class="ItemCard">
+    <h4 class="mb-2">Completed</h4>
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Modules</h5>
+                    @if (Model.Modules.FindAll(m => m.Status == "Completed").Count != 0)
+                    {
+                        <ul class="list-group list-group-flush">
+                            @foreach (var module in Model.Modules.FindAll(m => m.Status == "Completed"))
+                            {
+                                <li class="list-group-item ItemCard ItemCard-Completed">
+                                    <p class="mb-1"><strong>Project:</strong> @module.ProjectID</p>
+                                    <p class="mb-1"><strong>Module:</strong> @module.ModuleID</p>
+                                    <p class="mb-1"><strong>Title:</strong> @module.Title</p>
+                                    <p class="mb-1"><strong>Status:</strong> @module.Status</p>
+                                    <div class="mt-2">
+                                        <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Move Down</button>
+                                        </form>
+                                        <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                        </form>
+                                        <a href="#" class="btn btn-sm btn-info ms-1">View</a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info shadow-sm mt-3">
+                            No Modules created
+                        </div>
+                    }
+                </div>
             </div>
-        }
-        else
-        {
-            <div class="alert alert-info shadow-sm">
-                <p>No Modules created</p>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Submodules</h5>
+                    @if (false)
+                    {
+                        <div class="ItemCard">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info shadow-sm mt-3">
+                            No Submodules created
+                        </div>
+                    }
+                </div>
             </div>
-        }
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Tasks</h5>
+                    @if (false)
+                    {
+                        <div class="ItemCard">
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert alert-info shadow-sm mt-3">
+                            No Tasks created
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-
-<h4>In progress</h4>@*This is the In progress Section of the View*@
-<div class="TableCard" style="display: flex; width: 100%;">
-    <div class="Column" style="flex: 1; text-align: center;">
-        <h5 class="TableName">Modules</h5>
-
-        @if (Model.Modules.FindAll(m => m.Status == "In Progress").Count != 0)
-        {
-            foreach (var module in Model.Modules.FindAll(m => m.Status == "In Progress"))
-            {
-                <div class="ItemCard ItemCard-InProgress">
-                    <p>Project - @module.ProjectID</p>
-                    <p>Module - @module.ModuleID</p>
-                    <p>Title - @module.Title</p>
-                    <p>Status - @module.Status</p>
-
-                    <form asp-controller="Module" asp-action="MoveStatusUp" asp-route-id="@module.ModuleID" method="post" style="display:inline;">
-                        @Html.AntiForgeryToken()
-                        <button type="submit">Move up</button>
-                    </form>
-
-                    <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" style="display:inline;">
-                        @Html.AntiForgeryToken()
-                        <button type="submit">Move down</button>
-                    </form>
-
-                    <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form" style="display:inline;">
-                        @Html.AntiForgeryToken()
-                        <button type="submit">Remove</button>
-                    </form>
-
-                    <a>View</a>
-                </div>
-            }
-        }
-        else
-        {
-            <div class="alert alert-info shadow-sm">
-                <p>No Modules created</p>
-            </div>
-        }
-    </div>
-    <div class="ColumnLines Column" style="flex: 1; text-align: center;">
-        <h5 class="TableName">Submodules</h5>
-
-        @if (false)
-        {
-            <div class="ItemCard">
-            </div>
-        }
-        else
-        {
-            <div class="alert alert-info shadow-sm">
-                <p>No Modules created</p>
-            </div>
-        }
-    </div>
-    <div class="Column" style="flex: 1; text-align: center;">
-        <h5 class="TableName">Tasks</h5>
-
-        @if (false)
-        {
-            <div class="ItemCard">
-            </div>
-        }
-        else
-        {
-            <div class="alert alert-info shadow-sm">
-                <p>No Modules created</p>
-            </div>
-        }
-    </div>
-</div>
-
-
-<h4>Completed</h4> @*This is the Completed Section of the View*@
-
-<div class="TableCard" style="display: flex; width: 100%;">
-    <div class="Column" style="flex: 1; text-align: center;">
-        <h5 class="TableName">Modules</h5>
-
-        @if (Model.Modules.FindAll(m => m.Status == "Completed").Count != 0)
-        {
-            foreach (var module in Model.Modules.FindAll(m => m.Status == "Completed"))
-            {
-                <div class="ItemCard ItemCard-Completed">
-                    <p>Project - @module.ProjectID</p>
-                    <p>Module - @module.ModuleID</p>
-                    <p>Title - @module.Title</p>
-                    <p>Status - @module.Status</p>
-
-                    <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" style="display:inline;">
-                        @Html.AntiForgeryToken()
-                        <button type="submit">Move down</button>
-                    </form>
-
-                    <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form" style="display:inline;">
-                        @Html.AntiForgeryToken()
-                        <button type="submit">Remove</button>
-                    </form>
-
-                    <a>View</a>
-                </div>
-            }
-        }
-        else
-        {
-            <div class="alert alert-info shadow-sm">
-                <p>No Modules created</p>
-            </div>
-        }
-    </div>
-    <div class="ColumnLines Column" style="flex: 1; text-align: center;">
-        <h5 class="TableName">Submodules</h5>
-
-        @if (false)
-        {
-            <div class="ItemCard">
-            </div>
-        }
-        else
-        {
-            <div class="alert alert-info shadow-sm">
-                <p>No Modules created</p>
-            </div>
-        }
-    </div>
-    <div class="Column" style="flex: 1; text-align: center;">
-        <h5 class="TableName">Tasks</h5>
-
-        @if (false)
-        {
-            <div class="ItemCard">
-            </div>
-        }
-        else
-        {
-            <div class="alert alert-info shadow-sm">
-                <p>No Modules created</p>
-            </div>
-        }
-    </div>
-</div>
-

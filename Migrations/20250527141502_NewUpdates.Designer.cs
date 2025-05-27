@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScrumApp__Juro_.Data;
 
@@ -11,9 +12,11 @@ using ScrumApp__Juro_.Data;
 namespace ScrumApp__Juro_.Migrations
 {
     [DbContext(typeof(ScrumDbContext))]
-    partial class ScrumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250527141502_NewUpdates")]
+    partial class NewUpdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

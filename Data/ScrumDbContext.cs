@@ -12,6 +12,7 @@ namespace ScrumApp__Juro_.Data
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Manager> Managers { get; set; }
         public DbSet<Developer> Developers { get; set; }
+        public DbSet<UserAuth> UserAuths { get; set; }
 
         public ScrumDbContext(DbContextOptions<ScrumDbContext> options) : base(options) { }
 

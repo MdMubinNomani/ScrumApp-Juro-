@@ -1,0 +1,28 @@
+﻿@model ScrumApp__Juro_.Models.Entities.UserAuth
+@{
+    ViewData["Title"] = "Manager Login";
+}
+
+<div class="login-card">
+    
+    <h2 style="color: teal;">Manager Login</h2>
+
+    <form asp-action="ManLogin" method="post">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input asp-for="Username" id="username" name="Username" type="text" required />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input  asp-for="Password" id="password" name="Password" type="password" required />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn-teal">Log In</button>
+            <button type="button" class="signup-btn" onclick="location.href='@Url.Action("ManRegister", "Auth")'">Sign Up</button>
+        </div>
+    </form>
+</div>

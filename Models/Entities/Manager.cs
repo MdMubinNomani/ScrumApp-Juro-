@@ -10,7 +10,8 @@ namespace ScrumApp__Juro_.Models.Entities
         [Required]
         public string Email { get; set; }
         [Required]
-        public string GoogleID { get; set; }
+        public string Username { get; set; }
+
         // Foreign Key
         public virtual ICollection<Project> Projects { get; set; }
     }

@@ -11,10 +11,18 @@
         <p class="lead text-muted">
             Juro is your all-in-one workspace for managing Scrum teams, tracking sprints, and delivering better software — <strong>faster</strong>.
             Whether you're planning your next sprint, running daily stand-ups, or reviewing backlogs, Juro keeps your team aligned and your projects on track.
+
+            Enter as
         </p>
 
-        <a asp-controller="Project" asp-action="Index" class="btn mt-4 text-white" style="background-color:#00796b; border-color:#00796b;">
-            Get Started
+        @* <a asp-controller="Project" asp-action="Index" class="btn mt-4 text-white" style="background-color:#00796b; border-color:#00796b;"> *@
+        @*     Get Started *@
+        @* </a> *@
+        <a asp-controller="Auth" asp-action="ManLogin" class="btn mt-4 text-white" style="background-color:#00796b; border-color:#00796b;">
+            Manager
+        </a>
+        <a asp-controller="Auth" asp-action="DevLogin" class="btn mt-4 text-white" style="background-color:#00796b; border-color:#00796b;">
+            Developer
         </a>
     </div>
 </div>

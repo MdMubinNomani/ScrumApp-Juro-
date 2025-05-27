@@ -10,6 +10,8 @@ namespace ScrumApp__Juro_.Data
         public DbSet<Module> Modules { get; set; }
         public DbSet<SubModule> SubModules { get; set; }
         public DbSet<Task> Tasks { get; set; }
+        public DbSet<Manager> Managers { get; set; }
+        public DbSet<Developer> Developers { get; set; }
 
         public ScrumDbContext(DbContextOptions<ScrumDbContext> options) : base(options) { }
 
@@ -31,6 +33,12 @@ namespace ScrumApp__Juro_.Data
                 .HasMany(s => s.Tasks)
                 .WithOne(t => t.SubModule)
                 .HasForeignKey(t => t.SubModuleID)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Manager>()
+                .HasMany(m => m.Projects)
+                .WithOne()
+                .HasForeignKey(p => p.ManagerID)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

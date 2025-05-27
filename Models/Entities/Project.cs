@@ -13,6 +13,10 @@ namespace ScrumApp__Juro_.Models.Entities
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
+        //Foreign Key
+        [Required]
+        public int ManagerID { get; set; }
+
         public virtual ICollection<Module> Modules { get; set; }
     }
 

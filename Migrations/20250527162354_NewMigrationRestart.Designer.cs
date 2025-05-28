@@ -12,8 +12,8 @@ using ScrumApp__Juro_.Data;
 namespace ScrumApp__Juro_.Migrations
 {
     [DbContext(typeof(ScrumDbContext))]
-    [Migration("20250527141502_NewUpdates")]
-    partial class NewUpdates
+    [Migration("20250527162354_NewMigrationRestart")]
+    partial class NewMigrationRestart
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -251,11 +251,13 @@ namespace ScrumApp__Juro_.Migrations
 
             modelBuilder.Entity("ScrumApp__Juro_.Models.Entities.Project", b =>
                 {
-                    b.HasOne("ScrumApp__Juro_.Models.Entities.Manager", null)
+                    b.HasOne("ScrumApp__Juro_.Models.Entities.Manager", "Manager")
                         .WithMany("Projects")
                         .HasForeignKey("ManagerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("ScrumApp__Juro_.Models.Entities.SubModule", b =>

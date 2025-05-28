@@ -24,7 +24,7 @@ namespace ScrumApp__Juro_.Controllers
         public async Task<IActionResult> ManLogin(UserAuth auth)
         {
             var user = await _context.UserAuths
-            .FirstOrDefaultAsync(u => u.Username == auth.Username && u.Password == auth.Password);
+                .FirstOrDefaultAsync(u => u.Username == auth.Username && u.Password == auth.Password);
 
             if (user == null)
             {
@@ -33,9 +33,14 @@ namespace ScrumApp__Juro_.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Manager");
+                var manager = await _context.Managers
+                    .FirstOrDefaultAsync(m => m.Username == user.Username);
+
+                TempData["ManagerID"] = manager.ManagerID; 
+                return RedirectToAction("Index", "Project");
             }
         }
+
 
         public IActionResult ManRegister()
         {

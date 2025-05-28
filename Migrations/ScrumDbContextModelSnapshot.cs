@@ -248,11 +248,13 @@ namespace ScrumApp__Juro_.Migrations
 
             modelBuilder.Entity("ScrumApp__Juro_.Models.Entities.Project", b =>
                 {
-                    b.HasOne("ScrumApp__Juro_.Models.Entities.Manager", null)
+                    b.HasOne("ScrumApp__Juro_.Models.Entities.Manager", "Manager")
                         .WithMany("Projects")
                         .HasForeignKey("ManagerID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("ScrumApp__Juro_.Models.Entities.SubModule", b =>

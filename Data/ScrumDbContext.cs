@@ -38,9 +38,11 @@ namespace ScrumApp__Juro_.Data
 
             modelBuilder.Entity<Manager>()
                 .HasMany(m => m.Projects)
-                .WithOne()
+                .WithOne(p => p.Manager) 
                 .HasForeignKey(p => p.ManagerID)
                 .OnDelete(DeleteBehavior.Cascade);
+
+
         }
     }
 }

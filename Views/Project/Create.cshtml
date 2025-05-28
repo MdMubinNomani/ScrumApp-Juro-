@@ -29,6 +29,9 @@
                     <span asp-validation-for="CreatedAt" class="text-danger"></span>
                 </div>
 
+                <input type="hidden" asp-for="ManagerID" value="@ViewBag.ManagerID" />
+
+
                 <div class="d-flex gap-2">
                     <button type="submit" class="btn btn-teal">Create</button>
                     <a asp-action="Projects" class="btn btn-secondary">Back to List</a>

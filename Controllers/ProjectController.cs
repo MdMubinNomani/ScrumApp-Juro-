@@ -18,28 +18,49 @@ namespace ScrumApp__Juro_.Controllers
         }
 
         // GET: Project
-        public IActionResult Index()
+
+        public IActionResult Index(int ManagerID)
         {
-            var projects = _context.Projects.ToList();
+            var projects = _context.Projects
+                .Include(p => p.Modules)
+                .Where(p => p.ManagerID == ManagerID) 
+                .ToList();
+
             return View(projects);
         }
+
 
         // GET: Project/Create
         public IActionResult Create()
         {
+            ViewBag.ManagerID = TempData["ManagerID"];
             return View();
         }
+
 
         // Post: Project/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title, Description, CreatedAt")] Project project)
+        public async Task<IActionResult> Create([Bind("Title, Description, CreatedAt, ManagerID")] Project project)
         {
+            if (project.ManagerID == 0)
+            {
+                if (TempData["ManagerID"] != null)
+                {
+                    project.ManagerID = Convert.ToInt32(TempData["ManagerID"]);
+                }
+                else
+                {
+                    return BadRequest("ManagerID not found.");
+                }
+            }
+
             project.Modules = new List<Module>();
             _context.Add(project);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", new { ManagerID = project.ManagerID });
         }
+
 
         // GET: Project/Enter/?id=
         public IActionResult Enter(int Id)
@@ -110,7 +131,7 @@ namespace ScrumApp__Juro_.Controllers
             _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction(nameof(Index)); 
+            return RedirectToAction("Index", new { ManagerID = project.ManagerID });
         }
 
 

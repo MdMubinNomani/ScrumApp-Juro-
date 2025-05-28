@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ScrumApp__Juro_.Models.Entities
 {
@@ -17,6 +18,8 @@ namespace ScrumApp__Juro_.Models.Entities
         [Required]
         public int ManagerID { get; set; }
 
+        [ForeignKey("ManagerID")]
+        public virtual Manager Manager { get; set; }
         public virtual ICollection<Module> Modules { get; set; }
     }
 

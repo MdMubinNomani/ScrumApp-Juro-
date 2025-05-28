@@ -6,11 +6,57 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ScrumApp__Juro_.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class NewMigrationRestart : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Developers",
+                columns: table => new
+                {
+                    DeveloperID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Developers", x => x.DeveloperID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Managers",
+                columns: table => new
+                {
+                    ManagerID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Managers", x => x.ManagerID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserAuths",
+                columns: table => new
+                {
+                    UserAuthID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserAuths", x => x.UserAuthID);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
@@ -19,11 +65,18 @@ namespace ScrumApp__Juro_.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ManagerID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projects", x => x.ProjectID);
+                    table.ForeignKey(
+                        name: "FK_Projects_Managers_ManagerID",
+                        column: x => x.ManagerID,
+                        principalTable: "Managers",
+                        principalColumn: "ManagerID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,6 +112,7 @@ namespace ScrumApp__Juro_.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProjectID = table.Column<int>(type: "int", nullable: false),
                     ModuleID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -82,6 +136,7 @@ namespace ScrumApp__Juro_.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ProjectID = table.Column<int>(type: "int", nullable: false),
                     SubModuleID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -101,6 +156,11 @@ namespace ScrumApp__Juro_.Migrations
                 column: "ProjectID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Projects_ManagerID",
+                table: "Projects",
+                column: "ManagerID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SubModules_ModuleID",
                 table: "SubModules",
                 column: "ModuleID");
@@ -115,7 +175,13 @@ namespace ScrumApp__Juro_.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Developers");
+
+            migrationBuilder.DropTable(
                 name: "Tasks");
+
+            migrationBuilder.DropTable(
+                name: "UserAuths");
 
             migrationBuilder.DropTable(
                 name: "SubModules");
@@ -125,6 +191,9 @@ namespace ScrumApp__Juro_.Migrations
 
             migrationBuilder.DropTable(
                 name: "Projects");
+
+            migrationBuilder.DropTable(
+                name: "Managers");
         }
     }
 }

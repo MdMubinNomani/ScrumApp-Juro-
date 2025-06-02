@@ -8,6 +8,8 @@
     <h2 style="color: teal;">Manager Login</h2>
 
     <form asp-action="ManLogin" method="post">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
         <div class="form-group">
             <label for="username">Username</label>
             <input asp-for="Username" id="username" name="Username" type="text" required />

@@ -6,8 +6,9 @@
 
 
 <head>
-    <link rel="stylesheet" href="~/css/LayoutStyles.css" />
     <link rel="stylesheet" href="~/css/EnterStyles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/ProjectDetailsStyle.css" />
+    <link rel="stylesheet" href="~/css/LayoutStyles.css" />
 </head>
 
 
@@ -42,20 +43,24 @@
                             @foreach (var module in Model.Modules.FindAll(m => m.Status == "Not Started"))
                             {
                                 <li class="list-group-item ItemCard ItemCard-NotStarted">
-                                    <p class="mb-1"><strong>Project:</strong> @module.ProjectID</p>
-                                    <p class="mb-1"><strong>Module:</strong> @module.ModuleID</p>
+                                    
                                     <p class="mb-1"><strong>Title:</strong> @module.Title</p>
-                                    <p class="mb-1"><strong>Status:</strong> @module.Status</p>
                                     <div class="mt-2">
                                         <form asp-controller="Module" asp-action="MoveStatusUp" asp-route-id="@module.ModuleID" method="post" class="d-inline">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Move Up</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary" title="Move Up">
+                                                <i class="bi bi-arrow-up"></i>
+                                            </button>
                                         </form>
                                         <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form ms-1">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Remove">
+                                                <i class="bi bi-x"></i>
+                                            </button>
                                         </form>
-                                        <a href="#" class="btn btn-sm btn-info ms-1">View</a>
+                                        <button class="btn btn-sm btn-info ms-1" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
                                     </div>
                                 </li>
                             }
@@ -122,24 +127,30 @@
                             @foreach (var module in Model.Modules.FindAll(m => m.Status == "In Progress"))
                             {
                                 <li class="list-group-item ItemCard ItemCard-InProgress">
-                                    <p class="mb-1"><strong>Project:</strong> @module.ProjectID</p>
-                                    <p class="mb-1"><strong>Module:</strong> @module.ModuleID</p>
                                     <p class="mb-1"><strong>Title:</strong> @module.Title</p>
-                                    <p class="mb-1"><strong>Status:</strong> @module.Status</p>
+                                    
                                     <div class="mt-2">
                                         <form asp-controller="Module" asp-action="MoveStatusUp" asp-route-id="@module.ModuleID" method="post" class="d-inline">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Move Up</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary" title="Move Up">
+                                                <i class="bi bi-arrow-up"></i>
+                                            </button>
                                         </form>
                                         <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" class="d-inline ms-1">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Move Down</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary" title="Move down">
+                                                <i class="bi bi-arrow-down"></i>
+                                            </button>
                                         </form>
                                         <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form ms-1">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Remove">
+                                                <i class="bi bi-x"></i>
+                                            </button>
                                         </form>
-                                        <a href="#" class="btn btn-sm btn-info ms-1">View</a>
+                                        <button class="btn btn-sm btn-info ms-1" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
                                     </div>
                                 </li>
                             }
@@ -206,20 +217,24 @@
                             @foreach (var module in Model.Modules.FindAll(m => m.Status == "Completed"))
                             {
                                 <li class="list-group-item ItemCard ItemCard-Completed">
-                                    <p class="mb-1"><strong>Project:</strong> @module.ProjectID</p>
-                                    <p class="mb-1"><strong>Module:</strong> @module.ModuleID</p>
                                     <p class="mb-1"><strong>Title:</strong> @module.Title</p>
-                                    <p class="mb-1"><strong>Status:</strong> @module.Status</p>
                                     <div class="mt-2">
-                                        <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" class="d-inline">
+
+                                        <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" class="d-inline ms-1">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary">Move Down</button>
+                                            <button type="submit" class="btn btn-sm btn-outline-secondary" title="Move down">
+                                                <i class="bi bi-arrow-down"></i>
+                                            </button>
                                         </form>
                                         <form asp-controller="Module" asp-action="Delete" asp-route-id="@module.ModuleID" method="post" class="d-inline delete-form ms-1">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Remove">
+                                                <i class="bi bi-x"></i>
+                                            </button>
                                         </form>
-                                        <a href="#" class="btn btn-sm btn-info ms-1">View</a>
+                                        <button class="btn btn-sm btn-info ms-1" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </button>
                                     </div>
                                 </li>
                             }

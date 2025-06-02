@@ -9,7 +9,6 @@ namespace ScrumApp__Juro_.Models.Entities
         public string Name { get; set; }
         [Required]
         public string Email { get; set; }
-        [Required]
         public string Username { get; set; }
 
         // Foreign Key

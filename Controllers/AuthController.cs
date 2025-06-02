@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ScrumApp__Juro_.Data;
 using ScrumApp__Juro_.Models.Entities;
+using ScrumApp__Juro_.ViewModels;
 
 namespace ScrumApp__Juro_.Controllers
 {
@@ -37,7 +38,7 @@ namespace ScrumApp__Juro_.Controllers
                     .FirstOrDefaultAsync(m => m.Username == user.Username);
 
                 TempData["ManagerID"] = manager.ManagerID; 
-                return RedirectToAction("Index", "Project");
+                return RedirectToAction("Index", "Project", new { ManagerID = manager.ManagerID});
             }
         }
 
@@ -48,21 +49,21 @@ namespace ScrumApp__Juro_.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ManRegister(UserAuth user)
+        public async Task<IActionResult> ManRegister(RegisterViewModel data)
         {
-            var exists = await _context.UserAuths.AnyAsync(u => u.Username == user.Username && u.Password == user.Password);
+            var exists = await _context.UserAuths.AnyAsync(u => u.Username == data.UserAuth.Username && u.Password == data.UserAuth.Password);
             if (exists)
             {
                 ModelState.AddModelError("", "Username already exists.");
-                return View(user);
+                return View(data);
             }
 
-            _context.UserAuths.Add(user);
+            _context.UserAuths.Add(data.UserAuth);
             var manager = new Manager
             {
-                Name = user.Name,
-                Email = user.Email,
-                Username = user.Username
+                Name = data.Manager.Name,
+                Email = data.Manager.Email,
+                Username = data.UserAuth.Username
             };
             _context.Managers.Add(manager);
             await _context.SaveChangesAsync();

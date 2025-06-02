@@ -4,7 +4,8 @@ namespace ScrumApp__Juro_.ViewModels
 {
     public class RegisterViewModel
     {
-        public Manager Manager { get; set; }
+        public Manager? Manager { get; set; }
+        public Developer? Developer { get; set; }
         public UserAuth UserAuth { get; set; }
     }
 }

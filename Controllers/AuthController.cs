@@ -76,6 +76,65 @@ namespace ScrumApp__Juro_.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DevLogin(UserAuth auth)
+        {
+            var user = await _context.Developers
+                .FirstOrDefaultAsync(u => u.Username == auth.Username);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Invalid username or password.");
+                return View(auth);
+            }
+
+            var pass = await _context.UserAuths
+                .SingleAsync(u => u.Username == user.Username);
+
+            if (pass.Password != auth.Password)
+            {
+                ModelState.AddModelError("", "Invalid username or password.");
+                return View(auth);
+            }
+            else
+            {
+                TempData["DeveloperID"] = user.DeveloperID;
+                return RedirectToAction("Index", "Developer");
+                //return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public IActionResult DevRegister()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DevRegister(RegisterViewModel data)
+        {
+            var dev = data.Developer;
+            var exists = await _context.Developers.FirstOrDefaultAsync(d => d.Username == data.UserAuth.Username);
+
+            if (exists != null)
+            {
+                ModelState.AddModelError("", "Username already exists.");
+                return View(data);
+            }
+
+            _context.UserAuths.Add(data.UserAuth);
+            var developer = new Developer
+            {
+                Name = data.Developer.Name,
+                Email = data.Developer.Email,
+                Username = data.UserAuth.Username
+            };
+            _context.Developers.Add(developer);
+            await _context.SaveChangesAsync();
+
+            TempData["SignupSuccess"] = "Account created successfully!";
+            return RedirectToAction("DevLogin");
+        }
 
     }
 }

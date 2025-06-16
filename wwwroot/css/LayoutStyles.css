@@ -145,11 +145,34 @@ main {
     color: white;
     border-radius: .5rem;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    padding: .5rem;
+    padding: .7rem;
+    margin-bottom: .5rem;
+}
+
+.ItemCard2 {
+    color: white;
+    border-radius: .5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    padding: .7rem;
+    margin-bottom: .5rem;
+}
+
+.ItemCard-NotStarted {
+    background-color: lightgray;
+    color: black;
+}
+
+.ItemCard-InProgress {
+    background-color: lightyellow;
+    color: black;
+}
+
+.ItemCard-Completed {
+    background-color: lightgreen;
+    color: black;
 }
 
 /*Login designs*/
-
 .login-card {
     position: absolute;
     top: 50%;

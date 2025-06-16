@@ -42,13 +42,38 @@
                         <ul class="list-group list-group-flush">
                             @foreach (var module in Model.Modules.FindAll(m => m.Status == "Not Started"))
                             {
-                                <li class="list-group-item ItemCard ItemCard-NotStarted">
-                                    
+                                <li class="list-group-item ItemCard2 ItemCard-NotStarted">
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="viewModal-@module.ModuleID" tabindex="-1" aria-labelledby="viewModalLabel-@module.ModuleID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="viewModalLabel-@module.ModuleID">Module Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <p><strong>Project ID:</strong> @module.ProjectID</p>
+                                                    <p><strong>Module ID:</strong> @module.ModuleID</p>
+                                                    <p><strong>Title:</strong> @module.Title</p>
+                                                    <p><strong>Status:</strong> @module.Status</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <a asp-controller="SubModule" asp-action="Create" asp-route-id="@module.ModuleID" class="btn btn-primary">
+                                                        Add Submodule
+                                                    </a>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Modal -->
+
                                     <p class="mb-1"><strong>Title:</strong> @module.Title</p>
                                     <div class="mt-2">
                                         <form asp-controller="Module" asp-action="MoveStatusUp" asp-route-id="@module.ModuleID" method="post" class="d-inline">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary" title="Move Up">
+                                            <button type="submit" class="btn btn-sm btn-primary" title="Move Up">
                                                 <i class="bi bi-arrow-up"></i>
                                             </button>
                                         </form>
@@ -58,9 +83,11 @@
                                                 <i class="bi bi-x"></i>
                                             </button>
                                         </form>
-                                        <button class="btn btn-sm btn-info ms-1" title="View">
+
+                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#viewModal-@module.ModuleID" title="View">
                                             <i class="bi bi-eye"></i>
-                                        </button>
+                                        </a>
+
                                     </div>
                                 </li>
                             }
@@ -126,19 +153,19 @@
                         <ul class="list-group list-group-flush">
                             @foreach (var module in Model.Modules.FindAll(m => m.Status == "In Progress"))
                             {
-                                <li class="list-group-item ItemCard ItemCard-InProgress">
+                                <li class="list-group-item ItemCard2 ItemCard-InProgress">
                                     <p class="mb-1"><strong>Title:</strong> @module.Title</p>
                                     
                                     <div class="mt-2">
                                         <form asp-controller="Module" asp-action="MoveStatusUp" asp-route-id="@module.ModuleID" method="post" class="d-inline">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary" title="Move Up">
+                                            <button type="submit" class="btn btn-sm btn-primary" title="Move Up">
                                                 <i class="bi bi-arrow-up"></i>
                                             </button>
                                         </form>
                                         <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" class="d-inline ms-1">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary" title="Move down">
+                                            <button type="submit" class="btn btn-sm btn-light" title="Move down">
                                                 <i class="bi bi-arrow-down"></i>
                                             </button>
                                         </form>
@@ -216,13 +243,13 @@
                         <ul class="list-group list-group-flush">
                             @foreach (var module in Model.Modules.FindAll(m => m.Status == "Completed"))
                             {
-                                <li class="list-group-item ItemCard ItemCard-Completed">
+                                <li class="list-group-item ItemCard2 ItemCard-Completed">
                                     <p class="mb-1"><strong>Title:</strong> @module.Title</p>
                                     <div class="mt-2">
 
                                         <form asp-controller="Module" asp-action="MoveStatusDown" asp-route-id="@module.ModuleID" method="post" class="d-inline ms-1">
                                             @Html.AntiForgeryToken()
-                                            <button type="submit" class="btn btn-sm btn-outline-secondary" title="Move down">
+                                            <button type="submit" class="btn btn-sm btn-light" title="Move down">
                                                 <i class="bi bi-arrow-down"></i>
                                             </button>
                                         </form>

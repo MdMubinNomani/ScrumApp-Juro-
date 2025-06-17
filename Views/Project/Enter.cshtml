@@ -27,7 +27,7 @@
 
     <h2 class="mb-3">Status</h2>
 
-    <h4 class="mb-2">Not Started / Backlog</h4>
+    <h4 class="mb-2">Not Started / Backlog</h4> <!-- NOT STARTED SECTION -->
     <p>
         <a asp-action="CreateModule" asp-route-id="@Model.Project.ProjectID" class="btn btn-success">Create Module</a>
     </p>
@@ -36,7 +36,7 @@
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Modules</h5>
+                    <h5 class="card-title">Modules</h5>  <!-- MODULE SECTION -->
                     @if (Model.Modules.FindAll(m => m.Status == "Not Started").Count != 0)
                     {
                         <ul class="list-group list-group-flush">
@@ -44,8 +44,8 @@
                             {
                                 <li class="list-group-item ItemCard2 ItemCard-NotStarted">
 
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="viewModal-@module.ModuleID" tabindex="-1" aria-labelledby="viewModalLabel-@module.ModuleID" aria-hidden="true">
+                                    <!-- Modal start -->
+                                    <div class="modal fade" id="moduleModal-@module.ModuleID" tabindex="-1" aria-labelledby="moduleModalLabel-@module.ModuleID" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -56,6 +56,7 @@
                                                     <p><strong>Project ID:</strong> @module.ProjectID</p>
                                                     <p><strong>Module ID:</strong> @module.ModuleID</p>
                                                     <p><strong>Title:</strong> @module.Title</p>
+                                                    <p><strong>Description:</strong> @module.Description</p>
                                                     <p><strong>Status:</strong> @module.Status</p>
                                                 </div>
                                                 <div class="modal-footer">
@@ -67,7 +68,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- /Modal -->
+                                    <!-- Modal end -->
 
                                     <p class="mb-1"><strong>Title:</strong> @module.Title</p>
                                     <div class="mt-2">
@@ -84,7 +85,7 @@
                                             </button>
                                         </form>
 
-                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#viewModal-@module.ModuleID" title="View">
+                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#moduleModal-@module.ModuleID" title="View">
                                             <i class="bi bi-eye"></i>
                                         </a>
 
@@ -106,11 +107,60 @@
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Submodules</h5>
-                    @if (false)
+					<h5 class="card-title">Submodules</h5> <!-- SUBMODULE SECTION -->
+                    @if (Model.SubModules.FindAll(m => m.Status == "Not Started").Count != 0)
                     {
-                        <div class="ItemCard">
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var submodule in Model.SubModules.FindAll(m => m.Status == "Not Started"))
+                            {
+                                <li class="list-group-item ItemCard2 ItemCard-NotStarted">
+
+                                    <!-- Modal start -->
+                                    <div class="modal fade" id="submoduleModal-@submodule.SubModuleID" tabindex="-1" aria-labelledby="submoduleModalLabel-@submodule.SubModuleID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="viewModalLabel-@submodule.SubModuleID">Submodule Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <p><strong>Module ID:</strong> @submodule.ModuleID</p>
+                                                    <p><strong>Submodule ID:</strong> @submodule.SubModuleID</p>
+                                                    <p><strong>Title:</strong> @submodule.Title</p>
+                                                    <p><strong>Description:</strong> @submodule.Description</p>
+                                                    <p><strong>Status:</strong> @submodule.Status</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal end -->
+
+                                    <p class="mb-1"><strong>Title:</strong> @submodule.Title</p>
+                                    <div class="mt-2">
+                                        <form asp-controller="Submodule" asp-action="MoveStatusUp" asp-route-id="@submodule.SubModuleID" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-primary" title="Move Up">
+                                                <i class="bi bi-arrow-up"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-controller="Submodule" asp-action="Delete" asp-route-id="@submodule.SubModuleID" method="post" class="d-inline delete-form ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Remove">
+                                                <i class="bi bi-x"></i>
+                                            </button>
+                                        </form>
+
+                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#submoduleModal-@submodule.SubModuleID" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+
+                                    </div>
+                                </li>
+                            }
+                        </ul>
                     }
                     else
                     {
@@ -125,7 +175,7 @@
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Tasks</h5>
+					<h5 class="card-title">Tasks</h5> <!-- TASK SECTION -->
                     @if (false)
                     {
                         <div class="ItemCard">
@@ -142,18 +192,41 @@
         </div>
     </div>
 
-    <h4 class="mb-2">In progress</h4>
+	<h4 class="mb-2">In progress</h4> <!-- IN PROGRESS SECTION -->
     <div class="row mb-4">
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Modules</h5>
+					<h5 class="card-title">Modules</h5> <!-- MODULES IN PROGRESS SECTION -->
                     @if (Model.Modules.FindAll(m => m.Status == "In Progress").Count != 0)
                     {
                         <ul class="list-group list-group-flush">
                             @foreach (var module in Model.Modules.FindAll(m => m.Status == "In Progress"))
                             {
                                 <li class="list-group-item ItemCard2 ItemCard-InProgress">
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="moduleModal-@module.ModuleID" tabindex="-1" aria-labelledby="moduleModalLabel-@module.ModuleID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="viewModalLabel-@module.ModuleID">Module Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <p><strong>Project ID:</strong> @module.ProjectID</p>
+                                                    <p><strong>Module ID:</strong> @module.ModuleID</p>
+                                                    <p><strong>Title:</strong> @module.Title</p>
+                                                    <p><strong>Description:</strong> @module.Description</p>
+                                                    <p><strong>Status:</strong> @module.Status</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Modal -->
+
                                     <p class="mb-1"><strong>Title:</strong> @module.Title</p>
                                     
                                     <div class="mt-2">
@@ -175,9 +248,9 @@
                                                 <i class="bi bi-x"></i>
                                             </button>
                                         </form>
-                                        <button class="btn btn-sm btn-info ms-1" title="View">
+                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#moduleModal-@module.ModuleID" title="View">
                                             <i class="bi bi-eye"></i>
-                                        </button>
+                                        </a>
                                     </div>
                                 </li>
                             }
@@ -196,11 +269,66 @@
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Submodules</h5>
-                    @if (false)
+					<h5 class="card-title">Submodules</h5> <!-- SUBMODULES IN PROGRESS SECTION -->
+                    @if (Model.SubModules.FindAll(m => m.Status == "In Progress").Count != 0)
                     {
-                        <div class="ItemCard">
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var submodule in Model.SubModules.FindAll(m => m.Status == "In Progress"))
+                            {
+                                <li class="list-group-item ItemCard2 ItemCard-InProgress">
+
+                                    <!-- Modal start -->
+                                    <div class="modal fade" id="submoduleModal-@submodule.SubModuleID" tabindex="-1" aria-labelledby="submoduleModalLabel-@submodule.SubModuleID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="viewModalLabel-@submodule.SubModuleID">Module Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <p><strong>Module ID:</strong> @submodule.ModuleID</p>
+                                                    <p><strong>Submodule ID:</strong> @submodule.ProjectID</p>
+                                                    <p><strong>Title:</strong> @submodule.Title</p>
+                                                    <p><strong>Description:</strong> @submodule.Description</p>
+                                                    <p><strong>Status:</strong> @submodule.Status</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal end -->
+
+                                    <p class="mb-1"><strong>Title:</strong> @submodule.Title</p>
+                                    <div class="mt-2">
+                                        <form asp-controller="Submodule" asp-action="MoveStatusUp" asp-route-id="@submodule.SubModuleID" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-primary" title="Move Up">
+                                                <i class="bi bi-arrow-up"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-controller="Submodule" asp-action="MoveStatusDown" asp-route-id="@submodule.SubModuleID" method="post" class="d-inline ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-light" title="Move down">
+                                                <i class="bi bi-arrow-down"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-controller="Submodule" asp-action="Delete" asp-route-id="@submodule.SubModuleID" method="post" class="d-inline delete-form ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Remove">
+                                                <i class="bi bi-x"></i>
+                                            </button>
+                                        </form>
+
+                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#submoduleModal-@submodule.SubModuleID" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+
+                                    </div>
+                                </li>
+                            }
+                        </ul>
                     }
                     else
                     {
@@ -237,13 +365,36 @@
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Modules</h5>
+					<h5 class="card-title">Modules</h5> <!-- COMPLETED MODULES SECTION -->
                     @if (Model.Modules.FindAll(m => m.Status == "Completed").Count != 0)
                     {
                         <ul class="list-group list-group-flush">
                             @foreach (var module in Model.Modules.FindAll(m => m.Status == "Completed"))
                             {
                                 <li class="list-group-item ItemCard2 ItemCard-Completed">
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="moduleModal-@module.ModuleID" tabindex="-1" aria-labelledby="moduleModalLabel-@module.ModuleID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="viewModalLabel-@module.ModuleID">Module Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <p><strong>Project ID:</strong> @module.ProjectID</p>
+                                                    <p><strong>Module ID:</strong> @module.ModuleID</p>
+                                                    <p><strong>Title:</strong> @module.Title</p>
+                                                    <p><strong>Description:</strong> @module.Description</p>
+                                                    <p><strong>Status:</strong> @module.Status</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Modal -->
+
                                     <p class="mb-1"><strong>Title:</strong> @module.Title</p>
                                     <div class="mt-2">
 
@@ -259,9 +410,9 @@
                                                 <i class="bi bi-x"></i>
                                             </button>
                                         </form>
-                                        <button class="btn btn-sm btn-info ms-1" title="View">
+                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#moduleModal-@module.ModuleID" title="View">
                                             <i class="bi bi-eye"></i>
-                                        </button>
+                                        </a>
                                     </div>
                                 </li>
                             }
@@ -280,11 +431,60 @@
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Submodules</h5>
-                    @if (false)
+					<h5 class="card-title">Submodules</h5> <!-- COMPLETED SUBMODULES SECTION -->
+                    @if (Model.SubModules.FindAll(m => m.Status == "Completed").Count != 0)
                     {
-                        <div class="ItemCard">
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var submodule in Model.SubModules.FindAll(m => m.Status == "Completed"))
+                            {
+                                <li class="list-group-item ItemCard2 ItemCard-Completed">
+
+                                    <!-- Modal start -->
+                                    <div class="modal fade" id="submoduleModal-@submodule.SubModuleID" tabindex="-1" aria-labelledby="submoduleModalLabel-@submodule.SubModuleID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="viewModalLabel-@submodule.SubModuleID">Module Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <p><strong>Module ID:</strong> @submodule.ModuleID</p>
+                                                    <p><strong>Submodule ID:</strong> @submodule.ProjectID</p>
+                                                    <p><strong>Title:</strong> @submodule.Title</p>
+                                                    <p><strong>Description:</strong> @submodule.Description</p>
+                                                    <p><strong>Status:</strong> @submodule.Status</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal end -->
+
+                                    <p class="mb-1"><strong>Title:</strong> @submodule.Title</p>
+                                    <div class="mt-2">
+                                        <form asp-controller="Submodule" asp-action="MoveStatusDown" asp-route-id="@submodule.SubModuleID" method="post" class="d-inline ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-light" title="Move down">
+                                                <i class="bi bi-arrow-down"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-controller="Submodule" asp-action="Delete" asp-route-id="@submodule.SubModuleID" method="post" class="d-inline delete-form ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Remove">
+                                                <i class="bi bi-x"></i>
+                                            </button>
+                                        </form>
+
+                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#submoduleModal-@submodule.SubModuleID" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+
+                                    </div>
+                                </li>
+                            }
+                        </ul>
                     }
                     else
                     {
@@ -299,7 +499,7 @@
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Tasks</h5>
+					<h5 class="card-title">Tasks</h5> <!-- COMPLETED TASKS SECTION -->
                     @if (false)
                     {
                         <div class="ItemCard">

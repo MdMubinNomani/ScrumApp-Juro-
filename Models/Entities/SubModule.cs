@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace ScrumApp__Juro_.Models.Entities
 {
@@ -18,8 +19,9 @@ namespace ScrumApp__Juro_.Models.Entities
         // Foreign Key
         public int ProjectID { get; set; }
         public int ModuleID { get; set; }
+        [ValidateNever]
         public virtual Module Module { get; set; }
-
+        [ValidateNever]
         public virtual ICollection<Task> Tasks { get; set; }
     }
 

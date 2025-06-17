@@ -131,6 +131,9 @@
                                                     <p><strong>Status:</strong> @submodule.Status</p>
                                                 </div>
                                                 <div class="modal-footer">
+                                                    <a asp-controller="Task" asp-action="Create" asp-route-id="@submodule.SubModuleID" class="btn btn-primary">
+                                                        Add task
+                                                    </a>
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                 </div>
                                             </div>
@@ -176,10 +179,58 @@
             <div class="card shadow-sm">
                 <div class="card-body text-center">
 					<h5 class="card-title">Tasks</h5> <!-- TASK SECTION -->
-                    @if (false)
+                    @if (Model.Tasks.FindAll(t => t.Status == "Not Started").Count != 0)
                     {
-                        <div class="ItemCard">
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var task in Model.Tasks.FindAll(t => t.Status == "Not Started"))
+                            {
+                                <li class="list-group-item ItemCard2 ItemCard-NotStarted">
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="taskModal-@task.TaskID" tabindex="-1" aria-labelledby="taskModalLabel-@task.TaskID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="taskModalLabel-@task.TaskID">Task Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <p><strong>Project ID:</strong> @task.ProjectID</p>
+                                                    <p><strong>SubModule ID:</strong> @task.SubModuleID</p>
+                                                    <p><strong>Task ID:</strong> @task.TaskID</p>
+                                                    <p><strong>Title:</strong> @task.Title</p>
+                                                    <p><strong>Description:</strong> @task.Description</p>
+                                                    <p><strong>Status:</strong> @task.Status</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Task card display -->
+                                    <p class="mb-1"><strong>Title:</strong> @task.Title</p>
+                                    <div class="mt-2">
+                                        <form asp-controller="Task" asp-action="MoveStatusUp" asp-route-id="@task.TaskID" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-primary" title="Move Up">
+                                                <i class="bi bi-arrow-up"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-controller="Task" asp-action="Delete" asp-route-id="@task.TaskID" method="post" class="d-inline delete-form ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Remove">
+                                                <i class="bi bi-x"></i>
+                                            </button>
+                                        </form>
+                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#taskModal-@task.TaskID" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
                     }
                     else
                     {
@@ -187,6 +238,7 @@
                             No Tasks created
                         </div>
                     }
+
                 </div>
             </div>
         </div>
@@ -343,11 +395,65 @@
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Tasks</h5>
-                    @if (false)
+                    <h5 class="card-title">Tasks</h5> <!-- TASK IN PROGRESS SECTION -->
+                    @if (Model.Tasks.FindAll(t => t.Status == "In Progress").Count != 0)
                     {
-                        <div class="ItemCard">
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var task in Model.Tasks.FindAll(t => t.Status == "In Progress"))
+                            {
+                                <li class="list-group-item ItemCard2 ItemCard-InProgress">
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="taskModal-@task.TaskID" tabindex="-1" aria-labelledby="taskModalLabel-@task.TaskID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="taskModalLabel-@task.TaskID">Task Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <p><strong>Project ID:</strong> @task.ProjectID</p>
+                                                    <p><strong>SubModule ID:</strong> @task.SubModuleID</p>
+                                                    <p><strong>Task ID:</strong> @task.TaskID</p>
+                                                    <p><strong>Title:</strong> @task.Title</p>
+                                                    <p><strong>Description:</strong> @task.Description</p>
+                                                    <p><strong>Status:</strong> @task.Status</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    
+                                    <p class="mb-1"><strong>Title:</strong> @task.Title</p>
+                                    <div class="mt-2">
+                                        <form asp-controller="Task" asp-action="MoveStatusUp" asp-route-id="@task.TaskID" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-primary" title="Move Up">
+                                                <i class="bi bi-arrow-up"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-controller="Task" asp-action="MoveStatusDown" asp-route-id="@task.TaskID" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-light" title="Move Up">
+                                                <i class="bi bi-arrow-down"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-controller="Task" asp-action="Delete" asp-route-id="@task.TaskID" method="post" class="d-inline delete-form ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Remove">
+                                                <i class="bi bi-x"></i>
+                                            </button>
+                                        </form>
+                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#taskModal-@task.TaskID" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
                     }
                     else
                     {
@@ -355,6 +461,7 @@
                             No Tasks created
                         </div>
                     }
+
                 </div>
             </div>
         </div>
@@ -500,10 +607,59 @@
             <div class="card shadow-sm">
                 <div class="card-body text-center">
 					<h5 class="card-title">Tasks</h5> <!-- COMPLETED TASKS SECTION -->
-                    @if (false)
+                    @if (Model.Tasks.FindAll(t => t.Status == "Completed").Count != 0)
                     {
-                        <div class="ItemCard">
-                        </div>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var task in Model.Tasks.FindAll(t => t.Status == "Completed"))
+                            {
+                                <li class="list-group-item ItemCard2 ItemCard-Completed">
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="taskModal-@task.TaskID" tabindex="-1" aria-labelledby="taskModalLabel-@task.TaskID" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="taskModalLabel-@task.TaskID">Task Details</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <p><strong>Project ID:</strong> @task.ProjectID</p>
+                                                    <p><strong>SubModule ID:</strong> @task.SubModuleID</p>
+                                                    <p><strong>Task ID:</strong> @task.TaskID</p>
+                                                    <p><strong>Title:</strong> @task.Title</p>
+                                                    <p><strong>Description:</strong> @task.Description</p>
+                                                    <p><strong>Status:</strong> @task.Status</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <p class="mb-1"><strong>Title:</strong> @task.Title</p>
+                                    <div class="mt-2">
+                                        
+                                        <form asp-controller="Task" asp-action="MoveStatusDown" asp-route-id="@task.TaskID" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-light" title="Move Up">
+                                                <i class="bi bi-arrow-down"></i>
+                                            </button>
+                                        </form>
+                                        <form asp-controller="Task" asp-action="Delete" asp-route-id="@task.TaskID" method="post" class="d-inline delete-form ms-1">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Remove">
+                                                <i class="bi bi-x"></i>
+                                            </button>
+                                        </form>
+                                        <a href="#" class="btn btn-sm btn-info ms-1" data-bs-toggle="modal" data-bs-target="#taskModal-@task.TaskID" title="View">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
                     }
                     else
                     {
@@ -511,6 +667,7 @@
                             No Tasks created
                         </div>
                     }
+
                 </div>
             </div>
         </div>

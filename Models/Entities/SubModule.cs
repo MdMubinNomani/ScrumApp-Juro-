@@ -18,6 +18,7 @@ namespace ScrumApp__Juro_.Models.Entities
 
         // Foreign Key
         public int ProjectID { get; set; }
+        public int DeveloperID { get; set; }
         public int ModuleID { get; set; }
         [ValidateNever]
         public virtual Module Module { get; set; }

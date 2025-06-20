@@ -99,8 +99,7 @@ namespace ScrumApp__Juro_.Controllers
             }
             else
             {
-                TempData["DeveloperID"] = user.DeveloperID;
-                return RedirectToAction("Index", "Developer");
+                return RedirectToAction("Index", "Developer", new {id = user.DeveloperID });
                 //return RedirectToAction("Index", "Home");
             }
         }

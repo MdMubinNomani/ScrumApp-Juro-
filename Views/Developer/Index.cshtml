@@ -1,10 +1,128 @@
-﻿@model ScrumApp__Juro_.Models.Entities.Developer
+﻿@model ScrumApp__Juro_.ViewModels.DeveloperModuleViewModel
 
 @{
 	ViewData["Title"] = "Developer Dashboard";
+	var listofStatus = new List<string> { "Not Started", "In Progress", "Completed" };
 }
-<p>Welcome @Model.Name (@Model.Username) !</p>
+<p>Welcome @Model.developer.Name (@Model.developer.Username) !</p>
 
 <h1 class="fw-bold text-teal">Work</h1>
+<h2>Modules</h2>
 
-<div class="alert alert-info shadow-sm">No work assigned yet.</div>
+@if (Model.modules.Count != 0)
+{
+	@foreach (var module in Model.modules)
+	{
+		<div class="">
+			<div class="card shadow-sm mb-3">
+				<div class="card-header bg-teal text-teal">
+					<h5 class="card-title mb-0"><strong>Title</strong> : @module.Title</h5>
+				</div>
+				<div class="card-body">
+					<p class="card-text"><strong>Description:</strong> @module.Description</p>
+					<p class="card-text"><strong>Status:</strong> @module.Status</p>
+					<p class="card-text"><strong>Type:</strong> Module</p>
+
+					<form asp-controller="Developer" asp-action="UpdateModuleStatus" method="post" class="d-flex align-items-center gap-2">
+						@Html.AntiForgeryToken()
+						<input type="hidden" name="ModuleID" value="@module.ModuleID" />
+
+						<select name="status" class="form-select form-select-sm" required style="max-width: 200px;">
+							<option value="">Status</option>
+							@foreach (var status in listofStatus)
+							{
+								<option value="@status">@status</option>
+							}
+						</select>
+
+						<button type="submit" class="btn btn-sm btn-success">Update</button>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	}
+}
+else
+{
+	<div class="alert alert-info shadow-sm">No Modules assigned yet.</div>
+}
+
+<h2>SubModules</h2>
+@if (Model.submodules.Count != 0)
+{
+	@foreach (var submodule in Model.submodules)
+	{
+		<div class="">
+			<div class="card shadow-sm mb-3">
+				<div class="card-header bg-teal text-teal">
+					<h5 class="card-title mb-0"><strong>Title</strong> : @submodule.Title</h5>
+				</div>
+				<div class="card-body">
+					<p class="card-text"><strong>Description:</strong> @submodule.Description</p>
+					<p class="card-text"><strong>Status:</strong> @submodule.Status</p>
+					<p class="card-text"><strong>Type:</strong> Submodule</p>
+
+					<form asp-controller="Developer" asp-action="UpdateSubModuleStatus" method="post" class="d-flex align-items-center gap-2">
+						@Html.AntiForgeryToken()
+						<input type="hidden" name="SubModuleID" value="@submodule.SubModuleID" />
+
+						<select name="status" class="form-select form-select-sm" required style="max-width: 200px;">
+							<option value="">Status</option>
+							@foreach (var status in listofStatus)
+							{
+								<option value="@status">@status</option>
+							}
+						</select>
+
+						<button type="submit" class="btn btn-sm btn-success">Update</button>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	}
+}
+else
+{
+	<div class="alert alert-info shadow-sm">No Submodules assigned yet.</div>
+}
+<h3>Tasks</h3>
+@if (Model.tasks.Count != 0)
+{
+	@foreach (var task in Model.tasks)
+	{
+		<div class="">
+			<div class="card shadow-sm mb-3">
+				<div class="card-header bg-teal text-teal">
+					<h5 class="card-title mb-0"><strong>Title</strong> : @task.Title</h5>
+				</div>
+				<div class="card-body">
+					<p class="card-text"><strong>Description:</strong> @task.Description</p>
+					<p class="card-text"><strong>Status:</strong> @task.Status</p>
+					<p class="card-text"><strong>Type:</strong> Task</p>
+
+					<form asp-controller="Developer" asp-action="UpdateTaskStatus" method="post" class="d-flex align-items-center gap-2">
+						@Html.AntiForgeryToken()
+						<input type="hidden" name="TaskID" value="@task.TaskID" />
+
+						<select name="status" class="form-select form-select-sm" required style="max-width: 200px;">
+							<option value="">Status</option>
+							@foreach (var status in listofStatus)
+							{
+								<option value="@status">@status</option>
+							}
+						</select>
+
+						<button type="submit" class="btn btn-sm btn-success">Update</button>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	}
+}
+else
+{
+	<div class="alert alert-info shadow-sm">No Tasks assigned yet.</div>
+}

@@ -83,6 +83,8 @@ namespace ScrumApp__Juro_.Controllers
             PVM.Tasks = _context.Tasks.Where(m => m.ProjectID == Id)
                 .ToList();
 
+            PVM.Developers = _context.Developers.ToList();
+
             return PVM;
         }
 

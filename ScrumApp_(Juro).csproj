@@ -21,4 +21,11 @@
     <Folder Include="Views\Module\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\img\horizontal.png" />
+    <None Include="wwwroot\img\logo-transparent.png" />
+    <None Include="wwwroot\img\logo.png" />
+    <None Include="wwwroot\img\story.png" />
+  </ItemGroup>
+
 </Project>

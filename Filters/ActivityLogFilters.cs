@@ -18,12 +18,12 @@ public class ActivityLogFilter : IAsyncActionFilter
 
     public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
     {
-        // Extract Username
+        
         var username = context.HttpContext.User.Identity?.Name ?? "Anonymous";
         var role = "Unknown";
         var email = "Unknown";
 
-        // Check if user exists in Manager table
+     
         var manager = _context.Managers.FirstOrDefault(m => m.Username == username);
         if (manager != null)
         {
@@ -44,6 +44,6 @@ public class ActivityLogFilter : IAsyncActionFilter
 
         await _logger.LogAsync(role, username, email, $"Accessed {actionName}");
 
-        await next(); // Execute the action
+        await next();
     }
 }

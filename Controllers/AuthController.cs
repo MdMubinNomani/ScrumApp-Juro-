@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ScrumApp__Juro_.Data;
 using ScrumApp__Juro_.Models.Entities;
+using ScrumApp__Juro_.Services;
 using ScrumApp__Juro_.ViewModels;
 
 namespace ScrumApp__Juro_.Controllers
@@ -10,10 +11,14 @@ namespace ScrumApp__Juro_.Controllers
     {
 
         private readonly ScrumDbContext _context;
-        public AuthController(ScrumDbContext context)
+        private readonly ActivityLogger _logger;
+
+        public AuthController(ScrumDbContext context, ActivityLogger logger)
         {
-            this._context = context;
+            _context = context;
+            _logger = logger;
         }
+
 
         public IActionResult ManLogin()
         {
@@ -37,7 +42,15 @@ namespace ScrumApp__Juro_.Controllers
                 var manager = await _context.Managers
                     .FirstOrDefaultAsync(m => m.Username == user.Username);
 
-                TempData["ManagerID"] = manager.ManagerID; 
+                TempData["ManagerID"] = manager.ManagerID;
+                await _logger.LogAsync(
+                    role: "Manager",
+                    username: manager.Name,
+                    email: manager.Email,
+                    action: "Login",
+                    details: "Manager logged in successfully."
+                );
+
                 return RedirectToAction("Index", "Project", new { ManagerID = manager.ManagerID});
             }
         }
@@ -69,6 +82,13 @@ namespace ScrumApp__Juro_.Controllers
             await _context.SaveChangesAsync();
 
             TempData["SignupSuccess"] = "Account created successfully!";
+            await _logger.LogAsync(
+                    role: "Register[Manager]",
+                    username: manager.Name,
+                    email: manager.Email,
+                    action: "Signup",
+                    details: "Manager signed up successfully."
+                );
             return RedirectToAction("ManLogin");
         }
 
@@ -99,6 +119,13 @@ namespace ScrumApp__Juro_.Controllers
             }
             else
             {
+                await _logger.LogAsync(
+                    role: "Developer",
+                    username: user.Name,
+                    email: user.Email,
+                    action: "Login",
+                    details: "Developer logged in successfully."
+                );
                 return RedirectToAction("Index", "Developer", new {id = user.DeveloperID });
                 //return RedirectToAction("Index", "Home");
             }
@@ -132,6 +159,13 @@ namespace ScrumApp__Juro_.Controllers
             await _context.SaveChangesAsync();
 
             TempData["SignupSuccess"] = "Account created successfully!";
+            await _logger.LogAsync(
+                    role: "Register[Developer]",
+                    username: developer.Name,
+                    email: developer.Email,
+                    action: "Signup",
+                    details: "Developer signed up successfully."
+                );
             return RedirectToAction("DevLogin");
         }
 

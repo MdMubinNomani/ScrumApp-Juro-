@@ -1,13 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ScrumApp__Juro_.Data;
+using ScrumApp__Juro_.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<ActivityLogger>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ScrumDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<ActivityLogFilter>();
+});
 
 
 var app = builder.Build();

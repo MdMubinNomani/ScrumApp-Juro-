@@ -55,7 +55,7 @@
                                                 <div class="modal-body text-start">
 
                                                     @{
-                                                        var assignedDev = Model.Developers.FirstOrDefault(d => d.DeveloperID == module.DeveloperID);
+                                                        // var assignedDev = Model.Developers.FirstOrDefault(d => d.DeveloperID == module.DeveloperID);
                                                     }
 
                                                     <p><strong>Project ID:</strong> @module.ProjectID</p>
@@ -63,22 +63,22 @@
                                                     <p><strong>Title:</strong> @module.Title</p>
                                                     <p><strong>Description:</strong> @module.Description</p>
                                                     <p><strong>Status:</strong> @module.Status</p>
-                                                    <p><strong>Developer:</strong>  @(module.DeveloperID != 0 ? assignedDev.Name : "Not Assigned")</p>
+                                                    @* <p><strong>Developer:</strong>  @(module.DeveloperID != 0 ? assignedDev.Name : "Not Assigned")</p> *@
 
-                                                    <form asp-controller="Developer" asp-action="AssignDeveloperModule" method="post" class="d-flex align-items-center gap-2">
-                                                        @Html.AntiForgeryToken()
-                                                        <input type="hidden" name="ModuleID" value="@module.ModuleID" />
+                                                    @* <form asp-controller="Developer" asp-action="AssignDeveloperModule" method="post" class="d-flex align-items-center gap-2"> *@
+                                                    @*     @Html.AntiForgeryToken() *@
+                                                    @*     <input type="hidden" name="ModuleID" value="@module.ModuleID" /> *@
 
-                                                        <select name="DeveloperID" class="form-select form-select-sm" required style="max-width: 200px;">
-                                                            <option value="">Assign Developer</option>
-                                                            @foreach (var dev in Model.Developers)
-                                                            {
-                                                                <option value="@dev.DeveloperID">@dev.Name</option>
-                                                            }
-                                                        </select>
+                                                    @*     <select name="DeveloperID" class="form-select form-select-sm" required style="max-width: 200px;"> *@
+                                                    @*         <option value="">Assign Developer</option> *@
+                                                    @*         @foreach (var dev in Model.Developers) *@
+                                                    @*         { *@
+                                                    @*             <option value="@dev.DeveloperID">@dev.Name</option> *@
+                                                    @*         } *@
+                                                    @*     </select> *@
 
-                                                        <button type="submit" class="btn btn-sm btn-success">Assign</button>
-                                                    </form>
+                                                    @*     <button type="submit" class="btn btn-sm btn-success">Assign</button> *@
+                                                    @* </form> *@
 
                                                     
                                                 </div>
@@ -148,29 +148,29 @@
                                                 </div>
                                                 <div class="modal-body text-start">
                                                     @{
-                                                        var assignedDev = Model.Developers.FirstOrDefault(d => d.DeveloperID == submodule.DeveloperID);
+                                                        // var assignedDev = Model.Developers.FirstOrDefault(d => d.DeveloperID == submodule.DeveloperID);
                                                     }
                                                     <p><strong>Module ID:</strong> @submodule.ModuleID</p>
                                                     <p><strong>Submodule ID:</strong> @submodule.SubModuleID</p>
                                                     <p><strong>Title:</strong> @submodule.Title</p>
                                                     <p><strong>Description:</strong> @submodule.Description</p>
                                                     <p><strong>Status:</strong> @submodule.Status</p>
-                                                    <p><strong>Developer:</strong>  @(submodule.DeveloperID != 0 ? assignedDev.Name : "Not Assigned")</p>
+                                                    @* <p><strong>Developer:</strong>  @(submodule.DeveloperID != 0 ? assignedDev.Name : "Not Assigned")</p> *@
 
-                                                    <form asp-controller="Developer" asp-action="AssignDeveloperSubModule" method="post" class="d-flex align-items-center gap-2">
-                                                        @Html.AntiForgeryToken()
-                                                        <input type="hidden" name="SubModuleID" value="@submodule.SubModuleID" />
+                                                    @* <form asp-controller="Developer" asp-action="AssignDeveloperSubModule" method="post" class="d-flex align-items-center gap-2"> *@
+                                                    @*     @Html.AntiForgeryToken() *@
+                                                    @*     <input type="hidden" name="SubModuleID" value="@submodule.SubModuleID" /> *@
 
-                                                        <select name="DeveloperID" class="form-select form-select-sm" required style="max-width: 200px;">
-                                                            <option value="">Assign Developer</option>
-                                                            @foreach (var dev in Model.Developers)
-                                                            {
-                                                                <option value="@dev.DeveloperID">@dev.Name</option>
-                                                            }
-                                                        </select>
+                                                    @*     <select name="DeveloperID" class="form-select form-select-sm" required style="max-width: 200px;"> *@
+                                                    @*         <option value="">Assign Developer</option> *@
+                                                    @*         @foreach (var dev in Model.Developers) *@
+                                                    @*         { *@
+                                                    @*             <option value="@dev.DeveloperID">@dev.Name</option> *@
+                                                    @*         } *@
+                                                    @*     </select> *@
 
-                                                        <button type="submit" class="btn btn-sm btn-success">Assign</button>
-                                                    </form>
+                                                    @*     <button type="submit" class="btn btn-sm btn-success">Assign</button> *@
+                                                    @* </form> *@
                                                 </div>
 
                                                 <div class="modal-footer">
